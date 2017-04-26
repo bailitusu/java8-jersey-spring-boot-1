@@ -16,6 +16,17 @@ public class ProductModel extends IdBaseModel {
     @Column(name = "time_created", nullable = false, updatable = false)
     private Date timeCreated;
 
+    @Column(name = "category_id")
+    private Long categoryId;
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public String getName() {
         return name;
     }

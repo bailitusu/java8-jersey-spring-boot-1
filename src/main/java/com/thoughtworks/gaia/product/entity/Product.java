@@ -9,6 +9,16 @@ public class Product {
 
     private Date timeCreated;
 
+    private Long categoryId;
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public Long getId() {
         return id;
     }

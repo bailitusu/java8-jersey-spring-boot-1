@@ -1,6 +1,7 @@
 package com.thoughtworks.gaia.product.endpoint;
 
 import com.thoughtworks.gaia.product.entity.Product;
+import com.thoughtworks.gaia.product.model.ProductModel;
 import com.thoughtworks.gaia.product.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Component
 @Path("product")
@@ -32,5 +35,19 @@ public class ProductEndPoint {
     public Response getProduct(@PathParam("product_id") Long productId) {
         Product product = productService.getProduct(productId);
         return Response.ok().entity(product).build();
+    }
+
+    @POST
+    public Response saveProduct(Product product) throws URISyntaxException {
+        Product newProduct = productService.create(product);
+        return Response.created(new URI("/gaia/rest/product/" + newProduct.getId())).entity(newProduct).build();
+    }
+
+    @PUT
+    @Path("/{product_id}")
+    public Response updateProduct(@PathParam("product_id") Long productId, Product product) throws URISyntaxException {
+        product.setId(productId);
+        Product updatedProd = productService.update(product);
+        return Response.ok(updatedProd).location(new URI("/gaia/rest/product/" + updatedProd.getId())).build();
     }
 }
